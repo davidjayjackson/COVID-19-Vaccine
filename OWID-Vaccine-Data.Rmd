@@ -1,0 +1,93 @@
+---
+title: "Vaccine Data"
+author: "David Jackson"
+date: "1/24/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(scales)
+library(dplyr)
+library(readxl)
+library(forecast)
+library(RSQLite)
+library(plotly)
+```
+
+## Our World In Data Vaccine Plots
+
+```{r}
+rm(list=ls())
+source("../DATA/movavg.R")
+db <- db <- dbConnect(RSQLite::SQLite(),dbname= "../COVID-19-DB/OURWORLD.sqlite3")
+SWE <- dbGetQuery(db,"select * from OWID")
+SWE$date <- as.Date(SWE$date)
+SWE <- SWE[order(SWE$date),]
+df <- SWE %>%select(date,location,iso_code,new_vaccinations,
+                    new_vaccinations_smoothed,total_vaccinations,population)
+                    
+# df$VMA <- ma(df$new_vaccinations,6,centre=TRUE)
+
+dbDisconnect(db)
+```
+```{r}
+World <- df %>% filter(location=="World" & date >="2020-12-10") 
+```
+
+### Plot of New Vaccinations for the World by Day
+
+```{r}
+ggplot(World) + geom_line(aes(x=date,y=total_vaccinations)) +
+  scale_y_continuous(labels=comma) + 
+  labs(title="Worldwide Total Vaccinations")
+```
+
+### Total New Vaccinations by Country
+
+```{r}
+df %>% filter(location !="World") %>% na.omit() %>%
+  group_by(date) %>% summarise(Total = sum(new_vaccinations))
+    
+
+  
+  ggplot(vaccine_date) + geom_line(aes(x=date,y=Total)) + geom_smooth(aes(x=date,y=Total)) +
+    labs(title="Worldwide Vaccinations by Date") +
+    scale_y_continuous(labels=comma)
+```
+
+### Total Vaccinations by County (Top 5)
+```{r}
+vaccine_country <- df %>% filter(location !="World") %>% na.omit() %>%
+  group_by(location) %>% summarise(Total = sum(new_vaccinations)) %>%
+  arrange %>% top_n(5,Total)
+
+```
+```{r}
+ ggplot(vaccine_country) + geom_col(aes(x=location,y=Total)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="Top Five Countries by New Vaccinations")
+  
+  
+```
+
+### Plot of New and Total Vaccination for Israel
+
+```{r}
+Israel <- df %>% filter(location =="Israel") %>% na.omit()
+```
+```{r}
+ggplot(Israel) + geom_line(aes(x=date,y=new_vaccinations)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="Israel New Vaccinations By Date") +
+  geom_smooth(aes(x=date,y=new_vaccinations))
+```
+```{r}
+ggplot(Israel) + geom_line(aes(x=date,y=total_vaccinations)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="Israel Total Vaccinations By Date") 
+
+```
+
