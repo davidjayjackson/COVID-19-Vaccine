@@ -48,17 +48,19 @@ ggplot(World) + geom_line(aes(x=date,y=total_vaccinations)) +
 ### Total New Vaccinations by Country
 
 ```{r}
-df %>% filter(location !="World") %>% na.omit() %>%
+vaccine_date <- df %>% filter(location !="World") %>% na.omit() %>%
   group_by(date) %>% summarise(Total = sum(new_vaccinations))
     
 
-  
+```
+```{r}
   ggplot(vaccine_date) + geom_line(aes(x=date,y=Total)) + geom_smooth(aes(x=date,y=Total)) +
-    labs(title="Worldwide Vaccinations by Date") +
+    labs(title="Worldwide New Vaccinations by Date") +
     scale_y_continuous(labels=comma)
 ```
 
 ### Total Vaccinations by County (Top 5)
+
 ```{r}
 vaccine_country <- df %>% filter(location !="World") %>% na.omit() %>%
   group_by(location) %>% summarise(Total = sum(new_vaccinations)) %>%
@@ -90,4 +92,37 @@ ggplot(Israel) + geom_line(aes(x=date,y=total_vaccinations)) +
   labs(title="Israel Total Vaccinations By Date") 
 
 ```
+```{r}
+Israel$Rate <- Israel$total_vaccinations/Israel$population
+ggplot(Israel) + geom_line(aes(x=date,y=Rate)) +
+  scale_y_continuous(labels=percent) +
+  labs(title="Israel vaccination Rate By Day")
 
+```
+
+### US Vaccnations By Date
+
+
+```{r}
+US <- df %>% filter(location =="United States") %>% na.omit()
+```
+```{r}
+ggplot(US) + geom_line(aes(x=date,y=new_vaccinations)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="US New Vaccinations By Date") +
+  geom_smooth(aes(x=date,y=new_vaccinations))
+```
+```{r}
+ggplot(US) + geom_line(aes(x=date,y=total_vaccinations)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="US Total Vaccinations By Date") 
+
+```
+
+```{r}
+US$Rate <- US$total_vaccinations/US$population
+ggplot(US) + geom_line(aes(x=date,y=Rate)) +
+  scale_y_continuous(labels=percent) +
+  labs(title="US vaccination Rate By Day")
+
+```
