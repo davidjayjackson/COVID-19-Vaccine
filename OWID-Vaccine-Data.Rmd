@@ -1,7 +1,7 @@
 ---
-title: "Vaccine Data"
+title: "COVID-19 Vaccine Rollout"
 author: "David Jackson"
-date: "1/24/2021"
+date: "1/27/2021 01:50"
 output: html_document
 ---
 
