@@ -161,3 +161,87 @@ p10 <- ggplot(US) + geom_line(aes(x=date,y=Rate)) +
   labs(title="Spain vaccination Rate By Day")
 ggplotly(p10)
 ```
+
+### United Kingdom Vaccnations By Date
+
+```{r}
+US <- df %>% filter(location =="United Kingdom") %>% na.omit()
+```
+```{r}
+p8 <- ggplot(US) + geom_line(aes(x=date,y=new_vaccinations)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="United Kingdom New Vaccinations By Date") +
+  geom_smooth(aes(x=date,y=new_vaccinations))
+```
+```{r}
+p9 <- ggplot(US) + geom_line(aes(x=date,y=total_vaccinations)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="United Kingdom Total Vaccinations By Date") 
+ggplotly(p8)
+ggplotly(p9)
+
+```
+
+```{r}
+US$Rate <- US$total_vaccinations/US$population
+p10 <- ggplot(US) + geom_line(aes(x=date,y=Rate)) +
+  scale_y_continuous(labels=percent) +
+  labs(title="Kingdom vaccination Rate By Day")
+ggplotly(p10)
+```
+
+### India Vaccnations By Date
+
+```{r}
+US <- df %>% filter(location =="India") %>% na.omit()
+```
+```{r}
+p8 <- ggplot(US) + geom_line(aes(x=date,y=new_vaccinations)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="India New Vaccinations By Date") +
+  geom_smooth(aes(x=date,y=new_vaccinations))
+```
+```{r}
+p9 <- ggplot(US) + geom_line(aes(x=date,y=total_vaccinations)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="India Total Vaccinations By Date") 
+ggplotly(p8)
+ggplotly(p9)
+
+```
+
+```{r}
+US$Rate <- US$total_vaccinations/US$population
+p10 <- ggplot(US) + geom_line(aes(x=date,y=Rate)) +
+  scale_y_continuous(labels=percent) +
+  labs(title="India vaccination Rate By Day")
+ggplotly(p10)
+```
+
+### Germany Vaccnations By Date
+
+```{r}
+US <- df %>% filter(location =="Germany") %>% na.omit()
+```
+```{r}
+p8 <- ggplot(US) + geom_line(aes(x=date,y=new_vaccinations)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="Germany New Vaccinations By Date") +
+  geom_smooth(aes(x=date,y=new_vaccinations))
+```
+```{r}
+p9 <- ggplot(US) + geom_line(aes(x=date,y=total_vaccinations)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="Germany Total Vaccinations By Date") 
+ggplotly(p8)
+ggplotly(p9)
+
+```
+
+```{r}
+US$Rate <- US$total_vaccinations/US$population
+p10 <- ggplot(US) + geom_line(aes(x=date,y=Rate)) +
+  scale_y_continuous(labels=percent) +
+  labs(title="Germany vaccination Rate By Day")
+ggplotly(p10)
+```
