@@ -102,7 +102,6 @@ p3 <- ggplot(Israel) + geom_line(aes(x=date,y=Rate)) +
 ggplotly(p1)
 ggplotly(p2)
 ggplotly(p3)
-ggplotly(p4)
 ```
 
 ### US Vaccnations By Date
@@ -160,5 +159,5 @@ US$Rate <- US$total_vaccinations/US$population
 p10 <- ggplot(US) + geom_line(aes(x=date,y=Rate)) +
   scale_y_continuous(labels=percent) +
   labs(title="Spain vaccination Rate By Day")
-ggplotly(10)
+ggplotly(p10)
 ```
