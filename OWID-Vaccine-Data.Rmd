@@ -1,7 +1,7 @@
 ---
 title: "COVID-19 Vaccine Rollout"
 author: "David Jackson"
-date: "1/28/2021 90:00 PM/EST"
+date: "1/29/2021 02:25 PM/EST"
 output: html_document
 ---
 
