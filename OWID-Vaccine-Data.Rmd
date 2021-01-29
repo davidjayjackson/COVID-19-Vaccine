@@ -1,13 +1,13 @@
 ---
 title: "COVID-19 Vaccine Rollout"
 author: "David Jackson"
-date: "1/27/2021 01:50"
+date: "1/28/2021 90:00 PM/EST"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,message = FALSE,error = FALSE)
+
 library(ggplot2)
 library(scales)
 library(dplyr)
@@ -81,23 +81,28 @@ vaccine_country <- df %>% filter(location !="World") %>% na.omit() %>%
 Israel <- df %>% filter(location =="Israel") %>% na.omit()
 ```
 ```{r}
-ggplot(Israel) + geom_line(aes(x=date,y=new_vaccinations)) +
+p1 <- ggplot(Israel) + geom_line(aes(x=date,y=new_vaccinations)) +
   scale_y_continuous(labels=comma) +
   labs(title="Israel New Vaccinations By Date") +
   geom_smooth(aes(x=date,y=new_vaccinations))
 ```
 ```{r}
-ggplot(Israel) + geom_line(aes(x=date,y=total_vaccinations)) +
+p2 <- ggplot(Israel) + geom_line(aes(x=date,y=total_vaccinations)) +
   scale_y_continuous(labels=comma) +
   labs(title="Israel Total Vaccinations By Date") 
 
 ```
 ```{r}
 Israel$Rate <- Israel$total_vaccinations/Israel$population
-ggplot(Israel) + geom_line(aes(x=date,y=Rate)) +
+p3 <- ggplot(Israel) + geom_line(aes(x=date,y=Rate)) +
   scale_y_continuous(labels=percent) +
   labs(title="Israel vaccination Rate By Day")
 
+
+ggplotly(p1)
+ggplotly(p2)
+ggplotly(p3)
+ggplotly(p4)
 ```
 
 ### US Vaccnations By Date
@@ -107,13 +112,13 @@ ggplot(Israel) + geom_line(aes(x=date,y=Rate)) +
 US <- df %>% filter(location =="United States") %>% na.omit()
 ```
 ```{r}
-ggplot(US) + geom_line(aes(x=date,y=new_vaccinations)) +
+p5 <- ggplot(US) + geom_line(aes(x=date,y=new_vaccinations)) +
   scale_y_continuous(labels=comma) +
   labs(title="US New Vaccinations By Date") +
   geom_smooth(aes(x=date,y=new_vaccinations))
 ```
 ```{r}
-ggplot(US) + geom_line(aes(x=date,y=total_vaccinations)) +
+p6 <- ggplot(US) + geom_line(aes(x=date,y=total_vaccinations)) +
   scale_y_continuous(labels=comma) +
   labs(title="US Total Vaccinations By Date") 
 
@@ -121,8 +126,39 @@ ggplot(US) + geom_line(aes(x=date,y=total_vaccinations)) +
 
 ```{r}
 US$Rate <- US$total_vaccinations/US$population
-ggplot(US) + geom_line(aes(x=date,y=Rate)) +
+p7 <- ggplot(US) + geom_line(aes(x=date,y=Rate)) +
   scale_y_continuous(labels=percent) +
   labs(title="US vaccination Rate By Day")
+ggplotly(p5)
+ggplotly(p6)
+ggplotly(p7)
 
+```
+
+### Spain Vaccnations By Date
+
+```{r}
+US <- df %>% filter(location =="Spain") %>% na.omit()
+```
+```{r}
+p8 <- ggplot(US) + geom_line(aes(x=date,y=new_vaccinations)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="Spai nNew Vaccinations By Date") +
+  geom_smooth(aes(x=date,y=new_vaccinations))
+```
+```{r}
+p9 <- ggplot(US) + geom_line(aes(x=date,y=total_vaccinations)) +
+  scale_y_continuous(labels=comma) +
+  labs(title="Spain Total Vaccinations By Date") 
+ggplotly(p8)
+ggplotly(p9)
+
+```
+
+```{r}
+US$Rate <- US$total_vaccinations/US$population
+p10 <- ggplot(US) + geom_line(aes(x=date,y=Rate)) +
+  scale_y_continuous(labels=percent) +
+  labs(title="Spain vaccination Rate By Day")
+ggplotly(10)
 ```
