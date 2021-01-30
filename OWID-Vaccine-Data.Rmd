@@ -1,7 +1,7 @@
 ---
 title: "COVID-19 Vaccine Rollout"
 author: "David Jackson"
-date: "1/29/2021 02:25 PM/EST"
+date: "1/29/2021 09:35 PM/EST"
 output: html_document
 ---
 
@@ -109,6 +109,7 @@ ggplotly(p3)
 
 ```{r}
 US <- df %>% filter(location =="United States") %>% na.omit()
+summary(US$new_vaccinations)
 ```
 ```{r}
 p5 <- ggplot(US) + geom_line(aes(x=date,y=new_vaccinations)) +
